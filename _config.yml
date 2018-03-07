@@ -1,0 +1,6 @@
+exclude:            ["README.md", ".git/"]
+keep_files:         [".git"]
+encoding:           "utf-8"
+permalink:          pretty
+theme:              minima
+url:                https://riccibruno.github.io
