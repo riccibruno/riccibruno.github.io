@@ -1,2 +1,5 @@
 ##
 !.gitignore
+##
+_site/**
+.jekyll-metadata
