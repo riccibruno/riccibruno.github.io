@@ -4,4 +4,5 @@ encoding:           "utf-8"
 permalink:          pretty
 theme:              minima
 url:                https://riccibruno.github.io
-description:        ""
+description:        " "
+title:              " "
