@@ -6,3 +6,7 @@ theme:              minima
 url:                https://riccibruno.github.io
 description:        " "
 title:              " "
+author:             Bruno Ricci
+show_excerpts:      false
+header_pages:
+ - about.md
