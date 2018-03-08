@@ -7,8 +7,6 @@ layout: default
     <h1 class="page-heading">{{ page.title }}</h1>
   {% endif %}
 
-  {{ content }}
-
 <!-- This loops through the paginated posts -->
   {% for post in paginator.posts %}
     <h1><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h1>
