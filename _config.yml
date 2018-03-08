@@ -14,8 +14,8 @@ paginate:           2
 paginate_path:      "/page/:num/"
 minima:
     date_format:    "%e %B %Y"
-#header_pages:
-#- about.md
+header_pages:
+ - category_c++.html
 plugins:
     - jekyll-seo-tag
     - jekyll-relative-links
