@@ -8,6 +8,8 @@ description:        " "
 title:              " "
 author:             Bruno Ricci
 show_excerpts:      false
+timezone:           Europe/London
+future:             true
 minima:
     date_format:    "%e %B %Y"
 header_pages:
