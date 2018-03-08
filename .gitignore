@@ -1,5 +1,8 @@
 ##
 !.gitignore
-##
+## jekyll-related stuff
 _site/**
 .jekyll-metadata
+## vim temporary files
+**/*.swp
+
