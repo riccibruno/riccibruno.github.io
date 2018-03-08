@@ -21,3 +21,14 @@ plugins:
 relative_links:
     enabled:     true
     collections: false
+defaults:
+    -
+        scope:
+            path:   ""
+        values:
+            author: Bruno Ricci
+    -
+        scope:
+            path:   "_posts"
+        values:
+            layout: "post"
