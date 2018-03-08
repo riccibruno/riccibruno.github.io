@@ -8,16 +8,25 @@ layout: default
   {% endif %}
 
 <!-- This loops through the paginated posts -->
+  <h2 class="post-list-heading">Posts</h2>
+  <ul class="post-list">
   {% for post in paginator.posts %}
-    <h1><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h1>
-    <p class="author">
-    <span class="date">{{ post.date | date:"%m/%d/%Y" }}</span>
-    </p>
-    <div class="content">
-      {{ post.content }}
-    </div>
+    <li>
+      {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
+      <span class="post-meta">{{ post.date | date: date_format }}</span>
+      <h3>
+        <a class="post-link" href="{{ post.url | relative_url }}">
+          {{ post.title | escape }}
+        </a>
+      </h3>
+      <div class="content">
+        {{ post.content }}
+      </div>
+    </li>
   {% endfor %}
+  </ul>
 
+{% comment %}
   {% if site.posts.size > 0 %}
     <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
     <ul class="post-list">
@@ -36,8 +45,9 @@ layout: default
       </li>
       {% endfor %}
     </ul>
-
   {% endif %}
+{% endcomment %}
+
 
 <!-- Pagination links -->
   <div class="pagination">
