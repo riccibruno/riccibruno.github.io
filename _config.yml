@@ -13,5 +13,4 @@ minima:
 header_pages:
     - about.md
 plugins:
-    - jekyll-feed
     - jekyll-seo-tag
