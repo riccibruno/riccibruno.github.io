@@ -1,4 +1,4 @@
-exclude:            ["README.md", ".git/"]
+exclude:            ["README.md", ".git/", "Gemfile", "Gemfile.lock", ".gitignore", "LICENSE.txt"]
 keep_files:         [".git"]
 encoding:           "utf-8"
 permalink:          pretty
@@ -8,5 +8,10 @@ description:        " "
 title:              " "
 author:             Bruno Ricci
 show_excerpts:      false
+minima:
+    date_format:    "%e %B %Y"
 header_pages:
- - about.md
+    - about.md
+plugins:
+    - jekyll-feed
+    - jekyll-seo-tag
