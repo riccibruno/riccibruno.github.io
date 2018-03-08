@@ -29,6 +29,7 @@ defaults:
             author: Bruno Ricci
     -
         scope:
-            path:   "_posts"
+            path:       "_posts"
         values:
-            layout: "post"
+            layout:     "post"
+            excerpt:    " "
