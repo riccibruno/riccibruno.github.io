@@ -10,6 +10,8 @@ author:             Bruno Ricci
 show_excerpts:      true
 timezone:           Europe/London
 future:             true
+paginate:           5
+paginate_path:      "/page/:num/"
 minima:
     date_format:    "%e %B %Y"
 header_pages:
