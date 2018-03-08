@@ -1,4 +1,4 @@
-exclude:            ["README.md", ".git/", "Gemfile", "Gemfile.lock", ".gitignore", "LICENSE.txt"]
+exclude:            ["README.md", ".git/", "Gemfile", "Gemfile.lock", ".gitignore", "LICENSE.txt", "about.md"]
 keep_files:         [".git"]
 encoding:           "utf-8"
 permalink:          pretty
