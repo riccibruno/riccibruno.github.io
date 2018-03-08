@@ -14,3 +14,8 @@ header_pages:
     - about.md
 plugins:
     - jekyll-seo-tag
+    - jekyll-relative-links
+    - jekyll-paginate
+relative_links:
+    enabled:     true
+    collections: false
