@@ -7,7 +7,7 @@ url:                https://riccibruno.github.io
 description:        " "
 title:              " "
 author:             Bruno Ricci
-show_excerpts:      false
+show_excerpts:      true
 timezone:           Europe/London
 future:             true
 minima:
