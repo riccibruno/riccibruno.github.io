@@ -54,6 +54,12 @@ We first need some definitions. Skip them if you are already familiar with them:
    A partial order $$\leq$$ on a set $$S$$ is equivalent to a strict partial order $$ < $$ on $$S$$
    by defining $$ a < b \Leftrightarrow a \leq b \text{ and } a \neq b $$
 
+ - *the sequenced-before strict partial order* ---
+   The standard defines (4.6 [intro.execution]/15) the sequenced-before strict partial order on
+   the set of value/side effect computations *in a single thread* by $$ a < b \Leftrightarrow a \text{ occurs before } b $$,
+   where $$a$$ and $$b$$ are two value/side effect computations. As a notation simplification we will write $$E_1 < E_2$$
+   to mean << all value and side effect computations, recursively, of $$E_1$$ are sequenced before
+   all value and side effect computations, recursively, of $$E_2$$ >>.
 
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
