@@ -14,8 +14,6 @@ This draft should be very close to the final c++17 standard.
 We will indicate which rules apply only to c++17 and which rules apply to both
 c++17 and c++14.
 
-<!-- html comment -->
-
 We first need some definitions. Skip them if you are already familiar with them:
 
  - *observable behaviours*
