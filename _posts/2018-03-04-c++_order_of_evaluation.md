@@ -40,16 +40,17 @@ We first need some definitions. Skip them if you are already familiar with them:
    We will abbreviate the value computation by *val* and the side effect computation
    by *se*. (4.6 [intro.execution]/14)
 
- - *(strict) partial order* ---
+ - *partial order* ---
    A partial order $$\leq$$ on a set $$S$$ is a binary relation on $$S$$ that is:
    - transitive: $$ \forall a,b,c \in S \text{ , } a \leq b \text{ and } b \leq c \Rightarrow a \leq c $$
    - antisymmetric: $$ \forall a,b \in S \text{ , } a \leq b \text{ and } b \leq a \Rightarrow a = b$$
    - reflexive: $$ \forall a \in S \text{ , } a \leq a $$
-   ^
+
+ - *strict partial order* ---
    A strict partial order $$ < $$ on a set $$S$$ is a binary relation on $$S$$ that is:
-   - transitive
+   - transitive (see above)
    - irreflexive: $$ \nexists a \in S \text{ such that } a < a $$
-   ^
+   
    A partial order $$\leq$$ on a set $$S$$ is equivalent to a strict partial order $$ < $$ on $$S$$
    by defining $$ a < b \Leftrightarrow a \leq b \text{ and } a \neq b $$
 
