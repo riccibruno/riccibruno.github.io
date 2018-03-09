@@ -33,6 +33,13 @@ We first need some definitions. Skip them if you are already familiar with them:
     - calling a library I/O function
     - calling a function which does any of the above
 
+ - *value/side effects computation* ---
+   An evaluation of a (sub)expression involes in general both a value computation
+   (the result of the evaluation of the expression) and a side effect computation
+   (the side effects of the evaluation of the expression).
+   We will abbreviate the value computation by *val* and the side effect computation
+   by *se*. (4.6 [intro.execution]/14)
+
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
 [stackoverflow_c++_standard]: https://stackoverflow.com/questions/81656/where-do-i-find-the-current-c-or-c-standard-documents
