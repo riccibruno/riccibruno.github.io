@@ -40,6 +40,10 @@ We first need some definitions. Skip them if you are already familiar with them:
    We will abbreviate the value computation by *val* and the side effect computation
    by *se*. (4.6 [intro.execution]/14)
 
+ - *partial order* ---
+   A partial order $\leq$ on a set $S$ is a binary relation on $S$ that is:
+   - transitive: $ \forall a,b,c \in S \text{,} a \leq b \text{ and } b \leq c \Leftrightarrow a \leq c $
+
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
 [stackoverflow_c++_standard]: https://stackoverflow.com/questions/81656/where-do-i-find-the-current-c-or-c-standard-documents
