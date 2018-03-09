@@ -42,7 +42,7 @@ We first need some definitions. Skip them if you are already familiar with them:
 
  - *partial order* ---
    A partial order $$\leq$$ on a set $$S$$ is a binary relation on $$S$$ that is:
-   - transitive: $$ \forall a,b,c \in S \text{,} a \leq b \text{ and } b \leq c \Rightarrow a \leq c $$
+   - transitive: $$ \forall a,b,c \in S \text{ , } a \leq b \text{ and } b \leq c \Rightarrow a \leq c $$
 
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
