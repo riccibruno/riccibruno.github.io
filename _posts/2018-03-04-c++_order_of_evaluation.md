@@ -8,7 +8,7 @@ The sequenced-before partial order binary relation is introduced and copious ref
 Sequenced-before graphs are then introduced and used to determine the well-definedness (or undefinedness)
 of example expressions.
 
-<< The standard >> means the draft [n4659][draft_n4659] unless mentioned otherwise. 
+*The standard* means the draft [n4659][draft_n4659] unless mentioned otherwise. 
 This draft should be very close to the final c++17 standard.
 (See [this question on stackoverflow][stackoverflow_c++_standard])
 We will indicate which rules apply only to c++17 and which rules apply to both
@@ -16,7 +16,7 @@ c++17 and c++14.
 
 We first need some definitions. Skip them if you are already familiar with them:
 
- - *observable behaviours*
+ - *observable behaviours* ---
    Only the observable behaviours are required to be emulated by a conforming
    implementation. This rule is sometimes called the *as-if rule* since
    the implementation can do whatever it wants as long as from the point of view
@@ -26,7 +26,7 @@ We first need some definitions. Skip them if you are already familiar with them:
     - data written to files at program termination
     - during input/output, prompting output must be delivered before waiting for input
 
- - *side effects*
+ - *side effects* ---
    The following are defined to be side effects (4.6 [intro.execution]/14):
     - reading a volatile glvalue
     - modifying an object
