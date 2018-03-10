@@ -3,6 +3,7 @@ layout:        post
 title:         "Order of evaluation of (sub)expressions, the sequenced-before partial order and sequenced-before graphs in c++14/17"
 my_category:   "c++"
 ---
+{% comment %}
 In this post we review the rules concerning the order of evaluation of (sub)expressions in c++14 and c++17.
 The sequenced-before partial order binary relation is introduced and copious references to the standard are given.
 Sequenced-before graphs are then introduced and used to determine the well-definedness (or undefinedness)
@@ -64,3 +65,5 @@ We first need some definitions. Skip them if you are already familiar with them:
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
 [stackoverflow_c++_standard]: https://stackoverflow.com/questions/81656/where-do-i-find-the-current-c-or-c-standard-documents
+
+{% endcomment %}
