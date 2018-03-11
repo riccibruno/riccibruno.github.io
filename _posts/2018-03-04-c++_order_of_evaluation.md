@@ -111,7 +111,7 @@ The sequencing rules can be classified into 3 categories
 
 The basic rules are:
  - Given a full expression $$E_1$$ and the next full expression $$E_2$$,
-   $$E_1 < $$E_2$$.
+   $$E_1 < E_2$$.
  - Given an operator @ and operands $$E_i$$, val $$E_i < $$ val @.
  - In a function call, every argument expression and the postfix expression designating
    the call is sequenced before every expression in the function body.
