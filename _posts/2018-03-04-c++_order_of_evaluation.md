@@ -139,12 +139,12 @@ The rules added in c++17 are:
  3. Arithmetic shifts \<\</\>\> with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow e_1 < e_2$$.
  4. (Compound) assignment (see above rule 6.) $$e_1$$ @ $$e_2 \Rightarrow e_2 < e_1$$.
  5. Function call postfix-expression(arg expressions) $$\Rightarrow$$
-    - Postfix-expression $$< $$ $$arg expressions$$ and $$default argument expressions$$.
+    - Postfix-expression $$< $$ arg expressions and default argument expressions.
     - Argument expressions are indeterminately sequenced instead of being unsequenced.
     - For an operator invoked using the operator notation, the operands are sequenced as
       for built-in operators.
  6. New expression $$\Rightarrow$$ the allocation function is sequenced before the expressions in the initializer.
- 7. Parenthesized initializer ($$e_1$$,...$$e_n) $$\Rightarrow$$ $$\forall i=1,\cdots,n-1$$ we have $$e_i < e_{i+1}$$.
+ 7. Parenthesized initializer ($$e_1$$,...$$e_n$$) $$\Rightarrow$$ $$\forall i=1,\cdots,n-1$$ we have $$e_i < e_{i+1}$$.
    {% comment %}_ this is because vim is confused by the \_{% endcomment %}
 
 <!-- kramdown links defs -->
