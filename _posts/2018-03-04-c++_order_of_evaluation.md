@@ -119,8 +119,8 @@ The basic rules are:
    Additionally, function calls are indeterminately sequenced if not otherwise sequenced.
 
 The specific rules are (where @ is a placeholder for one of the appropriate operators):
- - Postfix ++/-- $$\Rightarrow$$ val @ < se @.
- - Prefix ++/-- with operand $$e \Rightarrow$$ val $$e < $$ se @ $$< $$ val @.
+ - Postfix \+\+/\-\- $$\Rightarrow$$ val @ < se @.
+ - Prefix \+\+/\-\- with operand $$e \Rightarrow$$ val $$e < $$ se @ $$< $$ val @.
  - Logical && and || with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow e_1 < e_2$$.
  - Ternary ?: with operands $$e_1$$, $$e_2$$ and $$e_3$$ ($$e_1$$ ? $$e_2$$ : $$e_3$$) $$\Rightarrow e_1 < e_2$$ and $$e_1 < e_3$$.
 
