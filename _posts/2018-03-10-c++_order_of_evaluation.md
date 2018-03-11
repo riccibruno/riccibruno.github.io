@@ -1,6 +1,6 @@
 ---
 layout:        post
-title:         "Order of evaluation of (sub)expressions, the sequenced-before partial order and sequenced-before graphs in c++14/17"
+title:         "Order of evaluation of expressions, the sequenced-before partial order and sequenced-before graphs in c++14/17"
 my_category:   "c++"
 ---
 In this post we review the rules concerning the order of evaluation of expressions in c++14 and c++17.
