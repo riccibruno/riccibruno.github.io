@@ -5,16 +5,16 @@ my_category:   "c++"
 ---
 **⌛in construction ⌛**
 
-In this post we review the rules concerning the order of evaluation of (sub)expressions in c++14 and c++17.
+In this post we review the rules concerning the order of evaluation of expressions in c++14 and c++17.
 The sequenced-before partial order binary relation is introduced and copious references to the standard are given.
 Sequenced-before graphs are then introduced and used to determine the well-definedness (or undefinedness)
 of example expressions.
 
-*The standard* means the draft [n4659][draft_n4659] unless mentioned otherwise. 
+The << standard >> means the draft [n4659][draft_n4659] unless mentioned otherwise.
 This draft should be very close to the final c++17 standard.
 (See [this question on stackoverflow][stackoverflow_c++_standard])
 We will indicate which rules apply only to c++17 and which rules apply to both
-c++17 and c++14. For the precise wording of the rules and definitions please consult the standard.
+c++17 and c++14. For the precise wording of the rules and definitions the standard should be consulted.
 
 We first need some definitions. Skip them if you are already familiar with them:
 
@@ -22,7 +22,7 @@ We first need some definitions. Skip them if you are already familiar with them:
    Only the observable behaviours are required to be emulated by a conforming
    implementation. This rule is sometimes called the *as-if rule* since
    the implementation can do whatever it wants as long as from the point of view
-   of the observable behaviours the program behaves as written. (4.6 [intro.execution]/1)
+   of the observable behaviours the program behaves as written (4.6 [intro.execution]/1).
    The observable behaviours are (4.6 [intro.exection]/7):
     - accesses to volatile glvalues
     - data written to files at program termination
@@ -65,6 +65,12 @@ We first need some definitions. Skip them if you are already familiar with them:
    to mean << all value and side effect computations, recursively, of $$e_1$$ are sequenced before
    all value and side effect computations, recursively, of $$e_2$$ >>.
 
+ - *unsequenced/indeterminately sequenced* ---
+   Given two value/side effect computations $$a$$ and $$b$$, $$a$$ and $$b$$ are said to
+   be unsequenced if neither $$a < b$$ nor $$b < a$$. $$a$$ and $$b$$ are said to be
+   indeterminately sequenced if either $$a < b$$ or $$b < a$$, but which one is unspecified
+   (4.6 [intro.execution]/15).
+
  - *well-defined/implementation-defined/unspecified/undefined behaviors* ---
    Behaviors can fall into four categories defined in (4.6 [intro.execution]/1-5):
    - *well-defined* ---
@@ -88,12 +94,6 @@ We first need some definitions. Skip them if you are already familiar with them:
    - object of scalar type (which are possibliy cv-qualified arithmetic types, enumeration types, pointer types,
      pointer-to-member types and std::nullptr_t (6.9 [basic.types]/9))
    - maximal sequence of adjacent bitfields all having non-zero width
-
- - *unsequenced/indeterminately sequenced* ---
-   Given two value/side effect computation $$a$$ and $$b$$, $$a$$ and $$b$$ are said to
-   be unsequenced if neither $$a < b$$ nor $$b < a$$. $$a$$ and $$b$$ are said to be
-   indeterminately sequenced if either $$a < b$$ or $$b < a$$, but which one is unspecified
-   (4.6 [intro.execution]/15).
 
 We can now give the criterion for the well-definedness of an expression.
 The behavior is well-defined unless one of the following is true, in
