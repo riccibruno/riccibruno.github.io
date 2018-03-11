@@ -126,7 +126,8 @@ The specific rules are (where @ is a placeholder for one of the appropriate oper
  - Comma , with operands $$e_1$$ and $$e_2$$ ($$e_1$$, $$e_2$$) $$\Rightarrow e_1 < e_2$$.
  - (Compound) assignment @ $$\in \{$$ =,\+=,\-=,/=,%=,^=,\|=,&=,\<\<=,\>\>= $$\}$$ \\
    with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow$$ val $$e_1$$ and val $$e_2 < $$ se @ $$< $$ val @.
- - Braced-init-list \{ $$e_1$$, $$e_2$$, ..., $$e_n$$  \} $$\rightarrow$$ $$\forall i=1,\cdots,n-1$$ $$e_i < e_{i+1}_$$.
+ - Braced-init-list \{ $$e_1$$, $$e_2$$, ..., $$e_n$$  \} $$\Rightarrow$$ $$\forall i=1,\cdots,n-1$$ we have $$e_i < e_{i+1}$$.
+   {% comment %}_{% endcomment %}
 
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
