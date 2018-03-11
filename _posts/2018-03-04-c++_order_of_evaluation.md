@@ -119,14 +119,10 @@ The basic rules are:
    Additionally, function calls are indeterminately sequenced if not otherwise sequenced.
 
 The specific rules are (where @ is a placeholder for one of the appropriate operators):
- - Postfix ++/--:\\
-   val @ < se @.
- - Prefix ++/-- with operand $$e$$:\\
-   val $$e < $$ se @ $$< $$ val @.
- - Logical && and || with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$):\\
-   $$e_1 < e_2$$.
- - Ternary ?: with operands $$e_1$$, $$e_2$$ and $$e_3$$ ($$e_1$$ ? $$e_2$$ : $$e_3$$):\\
-   $$e_1 < e_2$$ and $$e_1 < e_3$$.
+ - Postfix ++/-- $$\Leftrightarrow$$ val @ < se @.
+ - Prefix ++/-- with operand $$e \Leftrightarrow$$ val $$e < $$ se @ $$< $$ val @.
+ - Logical && and || with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Leftrightarrow e_1 < e_2$$.
+ - Ternary ?: with operands $$e_1$$, $$e_2$$ and $$e_3$$ ($$e_1$$ ? $$e_2$$ : $$e_3$$) $$\Leftrightarrow e_1 < e_2$$ and $$e_1 < e_3$$.
 
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
