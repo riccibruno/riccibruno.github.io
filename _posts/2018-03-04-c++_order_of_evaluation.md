@@ -106,11 +106,10 @@ which case the behavior is undefined (4.6 [intro.execution]/17):
 
 Unless otherwise specified evaluations are unsequenced (4.6 [intro.execution]/17).
 The sequencing rules can be classified into 3 categories
-(in the standard the rules are given all over the place, search for
-<< sequenced before >>):
- - *basic rules*
- - *specific rules*
- - *rules added in c++17*
+(in the standard the rules are given all over the place, search for << sequenced before >>):
+ - basic rules
+ - specific rules
+ - rules added in c++17
 
 The basic rules are:
  1. Given a full expression $$e_1$$ and the next full expression $$e_2 \Rightarrow e_1 < e_2$$.
