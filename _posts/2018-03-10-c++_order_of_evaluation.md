@@ -7,6 +7,7 @@ In this post we review the rules concerning the order of evaluation of expressio
 The sequenced-before partial order binary relation is introduced and copious references to the standard are given.
 Sequenced-before graphs are then introduced and used to determine the well-definedness (or undefinedness)
 of example expressions.
+<!--more-->
 
 The << standard >> means the draft [n4659][draft_n4659] unless mentioned otherwise.
 This draft should be very close to the final c++17 standard.
