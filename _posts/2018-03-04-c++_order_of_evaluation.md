@@ -78,6 +78,26 @@ We first need some definitions. Skip them if you are already familiar with them:
      The standard imposes absolutely no requirements on
      the behavior of programs which contains undefined behaviors.
 
+ - *memory location* ---
+   A memory location is one of the following (4.4 [intro.memory]/3):
+   - object of scalar type (which are possibliy cv-qualified arithmetic types, enumeration types, pointer types,
+     pointer-to-member types and std::nullptr_t (6.9 [basic.types]/9))
+   - maximal sequence of adjacent bitfields all having non-zero width
+
+ - *unsequenced/indeterminately sequenced* ---
+   Given two value/side effect computation $$a$$ and $$b$$, $$a$$ and $$b$$ are said to
+   be unsequenced if neither $$a < b$$ nor $$b < a$$. $$a$$ and $$b$$ are said to be
+   indeterminately sequenced if either $$a < b$$ or $$b < a$$, but which one is unspecified.
+
+We can now give the criterion for the well-definedness of an expression.
+The behavior is well-defined unless one of the following is true, in
+which case the behavior is undefined:
+ - A side effect on a memory location is unsequenced with another side effect
+   on the same memory location
+ - A side effect on a memory location is unsequenced with a value computation
+   on the same memory location, where the value computation uses the value in the
+   memory location
+
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
 [stackoverflow_c++_standard]: https://stackoverflow.com/questions/81656/where-do-i-find-the-current-c-or-c-standard-documents
