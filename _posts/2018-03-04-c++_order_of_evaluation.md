@@ -84,10 +84,12 @@ We first need some definitions. Skip them if you are already familiar with them:
      vary from one execution of a program to another.
    - *undefined* ---
      The standard imposes absolutely no requirements on
-     the behavior of programs which contains undefined behaviors.
+     the behavior of programs which contain undefined behaviors.
      In particular the program might do anything between work
      for some sense of the word <<work>>, crash, crash your computer
-     and launch all missiles.
+     and launch all missiles. More realistically the compiler can
+     assumes that the undefined behaviors do not occur which will give rise to
+     surprising behaviors.
 
  - *memory location* ---
    A memory location is one of the following (4.4 [intro.memory]/3):
