@@ -123,6 +123,9 @@ The specific rules are (where @ is a placeholder for one of the appropriate oper
  - Prefix \+\+/\-\- with operand $$e \Rightarrow$$ val $$e < $$ se @ $$< $$ val @.
  - Logical && and \|\| with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow e_1 < e_2$$.
  - Ternary ?: with operands $$e_1$$, $$e_2$$ and $$e_3$$ ($$e_1$$ ? $$e_2$$ : $$e_3$$) $$\Rightarrow e_1 < e_2$$ and $$e_1 < e_3$$.
+ - Comma , with operands $$e_1$$ and $$e_2$$ ($$e_1$$, $$e_2$$) $$\Rightarrow e_1 < e_2$$.
+ - (Compound) assignment {% raw %}  =,+=,-=,/=,%=,^=,|=,&=,<<=,>>= {% endraw %}\\
+   with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$Rightarrow$$ val $$e_1$$ and val $$e_2 < $$ se @ $$< $$ val @.
 
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
