@@ -124,7 +124,7 @@ The specific rules are (where @ is a placeholder for one of the appropriate oper
  - Logical && and \|\| with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow e_1 < e_2$$.
  - Ternary ?: with operands $$e_1$$, $$e_2$$ and $$e_3$$ ($$e_1$$ ? $$e_2$$ : $$e_3$$) $$\Rightarrow e_1 < e_2$$ and $$e_1 < e_3$$.
  - Comma , with operands $$e_1$$ and $$e_2$$ ($$e_1$$, $$e_2$$) $$\Rightarrow e_1 < e_2$$.
- - (Compound) assignment =,\+=,\-=,/=,%=,\^=,\|=,&=,\<\<=,\>\>= \\
+ - (Compound) assignment @ $$\in {$$ =,\+=,\-=,/=,%=,^=,\|=,&=,\<\<=,\>\>= $$}$$ \\
    with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow$$ val $$e_1$$ and val $$e_2 < $$ se @ $$< $$ val @.
 
 <!-- kramdown links defs -->
