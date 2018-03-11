@@ -12,6 +12,7 @@ timezone:           Europe/London
 future:             true
 paginate:           1
 paginate_path:      "/page/:num/"
+excerpt_separator:  "<!--more-->"
 minima:
     date_format:    "%e %B %Y"
 header_pages:
