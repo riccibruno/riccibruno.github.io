@@ -88,12 +88,12 @@ We first need some definitions. Skip them if you are already familiar with them:
      In particular the program might do anything between work
      for some sense of the word <<work>>, crash, crash your computer
      and launch all missiles. More realistically the compiler can
-     assumes that the undefined behaviors do not occur which will give rise to
+     assume that the undefined behaviors do not occur which will give rise to
      surprising behaviors.
 
  - *memory location* ---
    A memory location is one of the following (4.4 [intro.memory]/3):
-   - object of scalar type (which are possibliy cv-qualified arithmetic types, enumeration types, pointer types,
+   - object of scalar type (which are possibly cv-qualified arithmetic types, enumeration types, pointer types,
      pointer-to-member types and std::nullptr_t (6.9 [basic.types]/9))
    - maximal sequence of adjacent bitfields all having non-zero width
 
@@ -108,17 +108,17 @@ which case the behavior is undefined (4.6 [intro.execution]/17):
 
 Unless otherwise specified evaluations are unsequenced (4.6 [intro.execution]/17).
 The sequencing rules can be classified into 3 categories
-(in the standard the rules are given all over the place, search for << sequenced before >>):
+(in the standard the rules are given all over the place; search for << sequenced before >>):
  - basic rules
  - specific rules
  - rules added in c++17
 
 The basic rules are:
  1. Given a full expression $$e_1$$ and the next full expression $$e_2 \Rightarrow e_1 < e_2$$.
- 2. Given an operator @ and operands $$e_i$$, val $$e_i < $$ val @.
+ 2. Given an operator @ and operands $$e_i$$, val $$e_i < $$ val @.\\
    (note that nothing is said about the side effects)
- 3. In a function call postfix-expression(arg expressions), every argument expressions and
-   the postfix-expression designating the call are sequenced before every expressions in the function body.
+ 3. In a function call `postfix-expression(arg expressions)`, every argument expression and
+   the postfix-expression designating the call are sequenced before every expression in the function body.
    Additionally, function calls are indeterminately sequenced if not otherwise sequenced.
 
 References to the standard for the basic rules:
@@ -134,8 +134,7 @@ The specific rules are (where @ is a placeholder for one of the appropriate oper
  5. Comma , with operands $$e_1$$ and $$e_2$$ ($$e_1$$, $$e_2$$) $$\Rightarrow e_1 < e_2$$.
  6. (Compound) assignment @ $$\in \{$$ =,\+=,\-=,\*=,/=,%=,^=,\|=,&=,\<\<=,\>\>= $$\}$$ \\
    with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow$$ val $$e_1$$ and val $$e_2 < $$ se @ $$< $$ val @.
- 7. Braced-init-list \{ $$e_1$$, $$e_2$$, ..., $$e_n$$  \} $$\Rightarrow$$ $$\forall i=1,\cdots,n-1$$ we have $$e_i < e_{i+1}$$.
-   {% comment %}_ this is because vim is confused by the \_{% endcomment %}
+ 7. Braced-init-list \{ $$e_1$$, $$e_2$$, ..., $$e_n$$  \} $$\Rightarrow$$ $$\forall i=1,\cdots,n-1$$ we have $$e_i < e_{i+1}$$.{% comment %}_ this is because vim is confused by the \_{% endcomment %}
  8. Return statement $$\Rightarrow$$ copy init of the result $$< $$ destruction of temporaries at the end of the full expression
    $$< $$ destruction of the local variables in the block.
  9. New expression $$\Rightarrow$$ the allocation function is indeterminately sequenced with the expression in the initializer,
@@ -164,7 +163,7 @@ The rules added in c++17 are:
     - For an operator invoked using the operator notation, the operands are sequenced as
       for built-in operators.
  6. New expression $$\Rightarrow$$ the allocation function is sequenced before the expressions in the initializer.
- 7. Parenthesized initializer ($$e_1$$,...$$e_n$$) $$\Rightarrow$$ the $e_i$ are indeterminately sequenced.
+ 7. Parenthesized initializer ($$e_1$$, ..., $$e_n$$) $$\Rightarrow$$ the $$e_i$$ are indeterminately sequenced.
 
 References to the standard for the rules added in c++17:
  1. 8.2.1 [expr.sub]/1
