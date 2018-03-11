@@ -89,16 +89,33 @@ We first need some definitions. Skip them if you are already familiar with them:
  - *unsequenced/indeterminately sequenced* ---
    Given two value/side effect computation $$a$$ and $$b$$, $$a$$ and $$b$$ are said to
    be unsequenced if neither $$a < b$$ nor $$b < a$$. $$a$$ and $$b$$ are said to be
-   indeterminately sequenced if either $$a < b$$ or $$b < a$$, but which one is unspecified.
+   indeterminately sequenced if either $$a < b$$ or $$b < a$$, but which one is unspecified
+   (4.6 [intro.execution]/15).
 
 We can now give the criterion for the well-definedness of an expression.
 The behavior is well-defined unless one of the following is true, in
-which case the behavior is undefined:
+which case the behavior is undefined (4.6 [intro.execution]/17):
  - A side effect on a memory location is unsequenced with another side effect
    on the same memory location
  - A side effect on a memory location is unsequenced with a value computation
    on the same memory location, where the value computation uses the value in the
    memory location
+
+Unless otherwise specified evaluations are unsequenced.
+The sequencing rules can be classified into 3 categories
+(in the standard the rules are given all over the place, search for
+<< sequenced before >>):
+ - *basic rules*
+ - *specific rules*
+ - *rules added in c++17*
+
+The basic rules are:
+ - Given a full expression $$E_1$$ and the next full expression $$E_2$$,
+   $$E_1 < $$E_2$$.
+ - Given an operator @ and operands $$E_i$$, val $$E_i < $$ val @.
+ - In a function call, every argument expression and the postfix expression designating
+   the call is sequenced before every expression in the function body.
+   Additionally, function calls are indeterminately sequenced if not otherwise sequenced.
 
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
