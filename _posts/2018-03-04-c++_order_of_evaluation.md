@@ -193,7 +193,7 @@ All of the examples below use built-in arithmetic types (say ints).
    in c++14/17 $$\Rightarrow$$ undefined behavior\\
    - - -
 8. ![example8]\\
-   in c++14 $$\Rightarrow$$ well-defined because of the sequencing properties of the logical \|\|.
+   in c++14/17 $$\Rightarrow$$ well-defined because of the sequencing properties of the logical \|\|.
 
    $$
      i_\text{after} = \begin{cases}
@@ -203,8 +203,12 @@ All of the examples below use built-in arithmetic types (say ints).
    $$
 
    - - -
-9. ![example9]
-10. ![example10]
+9. ![example9]\\
+   in c++14/17 $$\Rightarrow$$ undefined behavior because accesses to volatile glvalues are side effects.
+   - - -
+10. ![example10]\\
+   in c++14 $$\Rightarrow$$ undefined behavior.\\
+   in c++17 $$\Rightarrow$$ well-defined; sets `a[i]` to `i` and then increments `i`.
 
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
