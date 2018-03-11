@@ -56,7 +56,7 @@ We first need some definitions. Skip them if you are already familiar with them:
 
  - *the sequenced-before strict partial order* ---
    The standard defines (4.6 [intro.execution]/15) the sequenced-before strict partial order on
-   the set of value/side effect computations *in a single thread* by $$ a < b \Leftrightarrow a \text{ occurs before } b $$,
+   the set of value/side effect computations *in a single thread* by $$a < b \Leftrightarrow a$$ occurs before $$b$$,
    where $$a$$ and $$b$$ are two value/side effect computations. As a notation simplification,
    given two expressions $$E_1$$ and $$E_2$$  we will write $$E_1 < E_2$$
    and say that $$E_1$$ is sequenced before $$E_2$$
