@@ -110,24 +110,35 @@ The sequencing rules can be classified into 3 categories
  - *rules added in c++17*
 
 The basic rules are:
- - Given a full expression $$E_1$$ and the next full expression $$E_2$$,
+ 1. Given a full expression $$E_1$$ and the next full expression $$E_2$$,
    $$E_1 < E_2$$.
- - Given an operator @ and operands $$E_i$$, val $$E_i < $$ val @.
+ 2. Given an operator @ and operands $$E_i$$, val $$E_i < $$ val @.
    (note that nothing is said about the side effects)
- - In a function call, every argument expression and the postfix expression designating
+ 3. In a function call, every argument expression and the postfix expression designating
    the call is sequenced before every expression in the function body.
    Additionally, function calls are indeterminately sequenced if not otherwise sequenced.
 
 The specific rules are (where @ is a placeholder for one of the appropriate operators):
- - Postfix \+\+/\-\- $$\Rightarrow$$ val @ < se @.
- - Prefix \+\+/\-\- with operand $$e \Rightarrow$$ val $$e < $$ se @ $$< $$ val @.
- - Logical && and \|\| with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow e_1 < e_2$$.
- - Ternary ?: with operands $$e_1$$, $$e_2$$ and $$e_3$$ ($$e_1$$ ? $$e_2$$ : $$e_3$$) $$\Rightarrow e_1 < e_2$$ and $$e_1 < e_3$$.
- - Comma , with operands $$e_1$$ and $$e_2$$ ($$e_1$$, $$e_2$$) $$\Rightarrow e_1 < e_2$$.
- - (Compound) assignment @ $$\in \{$$ =,\+=,\-=,/=,%=,^=,\|=,&=,\<\<=,\>\>= $$\}$$ \\
+ 1. Postfix \+\+/\-\- $$\Rightarrow$$ val @ < se @.
+ 2. Prefix \+\+/\-\- with operand $$e \Rightarrow$$ val $$e < $$ se @ $$< $$ val @.
+ 3. Logical && and \|\| with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow e_1 < e_2$$.
+ 4. Ternary ?: with operands $$e_1$$, $$e_2$$ and $$e_3$$ ($$e_1$$ ? $$e_2$$ : $$e_3$$) $$\Rightarrow e_1 < e_2$$ and $$e_1 < e_3$$.
+ 5. Comma , with operands $$e_1$$ and $$e_2$$ ($$e_1$$, $$e_2$$) $$\Rightarrow e_1 < e_2$$.
+ 6. (Compound) assignment @ $$\in \{$$ =,\+=,\-=,\*=,/=,%=,^=,\|=,&=,\<\<=,\>\>= $$\}$$ \\
    with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow$$ val $$e_1$$ and val $$e_2 < $$ se @ $$< $$ val @.
- - Braced-init-list \{ $$e_1$$, $$e_2$$, ..., $$e_n$$  \} $$\Rightarrow$$ $$\forall i=1,\cdots,n-1$$ we have $$e_i < e_{i+1}$$.
-   {% comment %}_{% endcomment %}
+ 7. Braced-init-list \{ $$e_1$$, $$e_2$$, ..., $$e_n$$  \} $$\Rightarrow$$ $$\forall i=1,\cdots,n-1$$ we have $$e_i < e_{i+1}$$.
+   {% comment %}_ this is because vim is confused by the \_{% endcomment %}
+ 8. Return statement $$\Rightarrow$$ copy init of the result $$< $$ destruction of temporaries at the end of the full expression
+   $$< $$ destruction of the local variables in the block.
+ 9. New expression $$\Rightarrow$$ the allocation function is indeterminately sequenced with the expression in the initializer,
+   and the initialization of the allocated object $$< $$ value computation of the new expression.
+
+The rules added in c++17 are:
+ 1. Subscript operator [] with operands $$e_1$$ and $$e_2$$ ($$e_1$$[$$e_2$$]) $$\Rightarrow e_1 < e_2$$.
+ 2. Pointer to member operator .\* / pointer to member of pointer operator ->\* with operands $$e_1$$ and $$e_2$$
+   ($$e_1$$@$$e_2$$) $$\Rightarrow e_1 < e_2$$.
+ 3. Arithmetic shifts \<\</\>\> with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow e_1 < e_2$$.
+ 4. (Compound) assignment (see above rule 6.) $$e_1 @ e_2 \Rightarrow e_2 < e_1$$.
 
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
