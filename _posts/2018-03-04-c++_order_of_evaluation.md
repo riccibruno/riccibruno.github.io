@@ -191,31 +191,38 @@ All of the examples below use built-in arithmetic types (say ints).
    in c++14 $$\Rightarrow$$ undefined behavior\\
    in c++17 $$\Rightarrow$$ well-defined; i is not incremented\\
    - - -
+   \\
 2. ![example2]\\
    in c++14/17 $$\Rightarrow$$ well-defined; i is incremented\\
    - - -
+   \\
 3. ![example3]\\
    in c++14 $$\Rightarrow$$ undefined behavior\\
    in c++17 $$\Rightarrow$$ unspecified behavior: can be either `f(i, i+1)` or `f(i, i)`.
    In any case `i` is guaranteed to have been incremented before the body of the function is entered.\\
    - - -
+   \\
 4. ![example4]\\
    in c++14 $$\Rightarrow$$ undefined behavior because of all of the red arrows\\
    in c++17 $$\Rightarrow$$ unspecified behavior: can be either `f(i+1, i+2)` or `f(i+2, i+2)`.
    In any case `i` is guaranteed to have been incremented before the body of the function is entered.\\
    - - -
+   \\
 5. ![example5]\\
    in c++14 $$\Rightarrow$$ undefined behavior\\
    in c++17 $$\Rightarrow$$ well-defined: equivalent to `(cout << i) << i`.
    Note that postfix ++ has much higher precedence than \<\<.\\
    - - -
+   \\
 6. ![example6]\\
    in c++14 $$\Rightarrow$$ undefined behavior because of all of the red arrows\\
    in c++17 $$\Rightarrow$$ well-defined; leaves `i` unchanged.\\
    - - -
+   \\
 7. ![example7]\\
    in c++14/17 $$\Rightarrow$$ undefined behavior\\
    - - -
+   \\
 8. ![example8]\\
    in c++14/17 $$\Rightarrow$$ well-defined because of the sequencing properties of the logical \|\|.
 
@@ -227,9 +234,11 @@ All of the examples below use built-in arithmetic types (say ints).
    $$
 
    - - -
+   \\
 9. ![example9]\\
    in c++14/17 $$\Rightarrow$$ undefined behavior because accesses to volatile glvalues are side effects.
    - - -
+   \\
 10. ![example10]\\
    in c++14 $$\Rightarrow$$ undefined behavior.\\
    in c++17 $$\Rightarrow$$ well-defined; sets `a[i]` to `i` and then increments `i`.
