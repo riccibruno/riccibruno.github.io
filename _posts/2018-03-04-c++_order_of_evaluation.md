@@ -104,7 +104,7 @@ which case the behavior is undefined (4.6 [intro.execution]/17):
    on the same memory location, where the value computation uses the value in the
    memory location
 
-Unless otherwise specified evaluations are unsequenced.
+Unless otherwise specified evaluations are unsequenced (4.6 [intro.execution]/17).
 The sequencing rules can be classified into 3 categories
 (in the standard the rules are given all over the place, search for
 << sequenced before >>):
@@ -119,6 +119,11 @@ The basic rules are:
  3. In a function call postfix-expression(arg expressions), every argument expressions and
    the postfix-expression designating the call are sequenced before every expressions in the function body.
    Additionally, function calls are indeterminately sequenced if not otherwise sequenced.
+
+References to the standard for the basic rules:
+ 1. 4.6 [intro.execution]/16
+ 2. 4.6 [intro.execution]/17
+ 3. 4.6 [intro.execution]/18 and 8.2.2 [expr.call]/5
 
 The specific rules are (where @ is a placeholder for one of the appropriate operators):
  1. Postfix \+\+/\-\- $$\Rightarrow$$ val @ < se @.
@@ -135,6 +140,17 @@ The specific rules are (where @ is a placeholder for one of the appropriate oper
  9. New expression $$\Rightarrow$$ the allocation function is indeterminately sequenced with the expression in the initializer,
    and the initialization of the allocated object $$< $$ value computation of the new expression.
 
+References to the standard for the specific rules:
+ 1. 8.2.6 [expr.post.incr]/1
+ 2. 8.3.2 [expr.pre.incr]/1,2
+ 3. 8.14 [expr.log.and]/2 and 8.15 [expr.log.or]/2
+ 4. 8.16 [expr.cond]/1
+ 5. 8.19 [expr.comma]/1
+ 6. 8.18 [expr.ass]/1
+ 7. 11.6.4 [dcl.init.list]/4
+ 8. 9.6.3 [stmt.return]/3
+ 9. 8.3.4 [expr.new]/19
+
 The rules added in c++17 are:
  1. Subscript operator [] with operands $$e_1$$ and $$e_2$$ ($$e_1$$[$$e_2$$]) $$\Rightarrow e_1 < e_2$$.
  2. Pointer to member operator .\* / pointer to member of pointer operator ->\* with operands $$e_1$$ and $$e_2$$\\
@@ -147,8 +163,16 @@ The rules added in c++17 are:
     - For an operator invoked using the operator notation, the operands are sequenced as
       for built-in operators.
  6. New expression $$\Rightarrow$$ the allocation function is sequenced before the expressions in the initializer.
- 7. Parenthesized initializer ($$e_1$$,...$$e_n$$) $$\Rightarrow$$ $$\forall i=1,\cdots,n-1$$ we have $$e_i < e_{i+1}$$.
-   {% comment %}_ this is because vim is confused by the \_{% endcomment %}
+ 7. Parenthesized initializer ($$e_1$$,...$$e_n$$) $$\Rightarrow$$ the $e_i$ are indeterminately sequenced.
+
+References to the standard for the rules added in c++17:
+ 1. 8.2.1 [expr.sub]/1
+ 2. 8.5 [expr.mptr.oper]/4
+ 3. 8.8 [expr.shift]/4
+ 4. 8.18 [expr.ass]/1
+ 5. 8.2.2 [expr.call]/5
+ 6. 8.3.4 [expr.new]/19
+ 7. 11.6 [dcl.init]/19
 
 We new consider some examples to show how those rules work in action.
 The examples are roughly ordered in order of increasing complexity.
