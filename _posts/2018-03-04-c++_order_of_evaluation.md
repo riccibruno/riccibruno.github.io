@@ -35,32 +35,49 @@ We first need some definitions. Skip them if you are already familiar with them:
     - calling a function which does any of the above
 
  - *value/side effects computation* ---
-   An evaluation of a (sub)expression involes in general both a value computation
+   An evaluation of an expression involes in general both a value computation
    (the result of the evaluation of the expression) and a side effect computation
-   (the side effects of the evaluation of the expression).
-   We will abbreviate the value computation by *val* and the side effect computation
-   by *se*. (4.6 [intro.execution]/14)
+   (the side effects of the evaluation of the expression) (4.6 [intro.execution]/14).
+   Given an expression $$E$$, we will abbreviate the value computation of $$E$$ by val $$E$$
+   and the side effect computation of $$E$$ by se $$E$$.
 
  - *partial order* ---
    A partial order $$\leq$$ on a set $$S$$ is a binary relation on $$S$$ that is:
-   - transitive: $$ \forall a,b,c \in S \text{ , } a \leq b \text{ and } b \leq c \Rightarrow a \leq c $$
-   - antisymmetric: $$ \forall a,b \in S \text{ , } a \leq b \text{ and } b \leq a \Rightarrow a = b$$
-   - reflexive: $$ \forall a \in S \text{ , } a \leq a $$
+   - transitive: $$\forall a,b,c \in S$$, $$a \leq b$$ and $$b \leq c \Rightarrow a \leq c$$
+   - antisymmetric: $$\forall a,b \in S$$, $$a \leq b$$ and $$b \leq a \Rightarrow a = b$$
+   - reflexive: $$\forall a \in S$$, $$a \leq a $$
 
  - *strict partial order* ---
    A strict partial order $$ < $$ on a set $$S$$ is a binary relation on $$S$$ that is:
    - transitive (see above)
-   - irreflexive: $$ \nexists a \in S \text{ such that } a < a $$
+   - irreflexive: $$ \nexists a \in S$$ such that $$a < a$$
    
    A partial order $$\leq$$ on a set $$S$$ is equivalent to a strict partial order $$ < $$ on $$S$$
-   by defining $$ a < b \Leftrightarrow a \leq b \text{ and } a \neq b $$
+   by defining $$a < b \Leftrightarrow a \leq b$$ and $$a \neq b$$.
 
  - *the sequenced-before strict partial order* ---
    The standard defines (4.6 [intro.execution]/15) the sequenced-before strict partial order on
    the set of value/side effect computations *in a single thread* by $$ a < b \Leftrightarrow a \text{ occurs before } b $$,
-   where $$a$$ and $$b$$ are two value/side effect computations. As a notation simplification we will write $$E_1 < E_2$$
+   where $$a$$ and $$b$$ are two value/side effect computations. As a notation simplification,
+   given two expressions $$E_1$$ and $$E_2$$  we will write $$E_1 < E_2$$
+   and say that $$E_1$$ is sequenced before $$E_2$$
    to mean << all value and side effect computations, recursively, of $$E_1$$ are sequenced before
    all value and side effect computations, recursively, of $$E_2$$ >>.
+
+ - *well-defined/implementation-defined/unspecified/undefined behaviors* ---
+   Behaviors can fall into four categories defined in (4.6 [intro.execution]/1-5):
+   - *well-defined* ---
+     The behavior is defined by the standard.
+   - *implementation-defined* ---
+     The standard specifies a range of possible behaviors and the
+     implementation must document what is the actual behavior.
+   - *unspecified* ---
+     The standard specifies a range of possible behaviors but
+     the actual behavior in this range is not specified and might
+     vary from one execution of a program to another.
+   - *undefined* ---
+     The standard imposes absolutely no requirements on
+     the behavior of programs which contains undefined behaviors.
 
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
