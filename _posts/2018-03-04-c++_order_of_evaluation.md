@@ -163,18 +163,19 @@ of non-obvious expressions. Wihout further ado here are the graph legends we wil
 
 All of the examples below use built-in arithmetic types (say ints).
 
-1. *example 1* ![example1]\\
+1. ![example1]\\
    in c++14 $$\Rightarrow$$ undefined behavior\\
-   in c++17 $$\Rightarrow$$ well-defined; i is not incremented
-1. *example 2* ![example2]
-1. *example 3* ![example3]
-1. *example 4* ![example4]
-1. *example 5* ![example5]
-1. *example 6* ![example6]
-1. *example 7* ![example7]
-1. *example 8* ![example8]
-1. *example 9* ![example9]
-1. *example 10* ![example10]
+   in c++17 $$\Rightarrow$$ well-defined; i is not incremented\\
+   - - -
+2. ![example2]
+3. ![example3]
+4. ![example4]
+5. ![example5]
+6. ![example6]
+7. ![example7]
+8. ![example8]
+9. ![example9]
+10. ![example10]
 
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
