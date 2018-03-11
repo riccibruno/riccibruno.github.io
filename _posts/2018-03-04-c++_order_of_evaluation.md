@@ -79,6 +79,9 @@ We first need some definitions. Skip them if you are already familiar with them:
    - *undefined* ---
      The standard imposes absolutely no requirements on
      the behavior of programs which contains undefined behaviors.
+     In particular the program might do anything between work
+     for some sense of the word <<work>>, crash, crash your computer
+     and launch all missiles.
 
  - *memory location* ---
    A memory location is one of the following (4.4 [intro.memory]/3):
@@ -146,6 +149,17 @@ The rules added in c++17 are:
  6. New expression $$\Rightarrow$$ the allocation function is sequenced before the expressions in the initializer.
  7. Parenthesized initializer ($$e_1$$,...$$e_n$$) $$\Rightarrow$$ $$\forall i=1,\cdots,n-1$$ we have $$e_i < e_{i+1}$$.
    {% comment %}_ this is because vim is confused by the \_{% endcomment %}
+
+We new consider some examples to show how those rules work in action.
+The examples are roughly ordered in order of increasing complexity.
+To illustrate them we introduce _sequenced-before graphs_.
+A sequenced-before graph is the directed graph obtained from the sequenced-before partial
+order for some set of value/side effect computations where $$a \rightarrow b$$ means
+that $$a$$ is sequenced-before $$b$$. Sequenced-before graphs allows us to easily detect if one
+of the two conditions for undefinedness are present, and if they are not present to decypher the meaning
+of non-obvious expressions. Wihout further ado here are the graph legends we will use:
+
+![defs]
 
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
