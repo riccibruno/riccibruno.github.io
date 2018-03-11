@@ -39,8 +39,8 @@ We first need some definitions. Skip them if you are already familiar with them:
    An evaluation of an expression involes in general both a value computation
    (the result of the evaluation of the expression) and a side effect computation
    (the side effects of the evaluation of the expression) (4.6 [intro.execution]/14).
-   Given an expression $$E$$, we will abbreviate the value computation of $$E$$ by val $$E$$
-   and the side effect computation of $$E$$ by se $$E$$.
+   Given an expression $$e$$, we will abbreviate the value computation of $$e$$ by val $$e$$
+   and the side effect computation of $$e$$ by se $$e$$.
 
  - *partial order* ---
    A partial order $$\leq$$ on a set $$S$$ is a binary relation on $$S$$ that is:
@@ -60,10 +60,10 @@ We first need some definitions. Skip them if you are already familiar with them:
    The standard defines (4.6 [intro.execution]/15) the sequenced-before strict partial order on
    the set of value/side effect computations *in a single thread* by $$a < b \Leftrightarrow a$$ occurs before $$b$$,
    where $$a$$ and $$b$$ are two value/side effect computations. As a notation simplification,
-   given two expressions $$E_1$$ and $$E_2$$  we will write $$E_1 < E_2$$
-   and say that $$E_1$$ is sequenced before $$E_2$$
-   to mean << all value and side effect computations, recursively, of $$E_1$$ are sequenced before
-   all value and side effect computations, recursively, of $$E_2$$ >>.
+   given two expressions $$e_1$$ and $$e_2$$  we will write $$e_1 < e_2$$
+   and say that $$e_1$$ is sequenced before $$e_2$$
+   to mean << all value and side effect computations, recursively, of $$e_1$$ are sequenced before
+   all value and side effect computations, recursively, of $$e_2$$ >>.
 
  - *well-defined/implementation-defined/unspecified/undefined behaviors* ---
    Behaviors can fall into four categories defined in (4.6 [intro.execution]/1-5):
@@ -110,12 +110,11 @@ The sequencing rules can be classified into 3 categories
  - *rules added in c++17*
 
 The basic rules are:
- 1. Given a full expression $$E_1$$ and the next full expression $$E_2$$,
-   $$E_1 < E_2$$.
- 2. Given an operator @ and operands $$E_i$$, val $$E_i < $$ val @.
+ 1. Given a full expression $$e_1$$ and the next full expression $$e_2 \Rightarrow e_1 < e_2$$.
+ 2. Given an operator @ and operands $$e_i$$, val $$e_i < $$ val @.
    (note that nothing is said about the side effects)
- 3. In a function call, every argument expression and the postfix expression designating
-   the call is sequenced before every expression in the function body.
+ 3. In a function call postfix-expression(arg expressions), every argument expressions and
+   the postfix-expression designating the call are sequenced before every expressions in the function body.
    Additionally, function calls are indeterminately sequenced if not otherwise sequenced.
 
 The specific rules are (where @ is a placeholder for one of the appropriate operators):
@@ -135,10 +134,18 @@ The specific rules are (where @ is a placeholder for one of the appropriate oper
 
 The rules added in c++17 are:
  1. Subscript operator [] with operands $$e_1$$ and $$e_2$$ ($$e_1$$[$$e_2$$]) $$\Rightarrow e_1 < e_2$$.
- 2. Pointer to member operator .\* / pointer to member of pointer operator ->\* with operands $$e_1$$ and $$e_2$$
+ 2. Pointer to member operator .\* / pointer to member of pointer operator ->\* with operands $$e_1$$ and $$e_2$$\\
    ($$e_1$$@$$e_2$$) $$\Rightarrow e_1 < e_2$$.
  3. Arithmetic shifts \<\</\>\> with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow e_1 < e_2$$.
- 4. (Compound) assignment (see above rule 6.) $$e_1 @ e_2 \Rightarrow e_2 < e_1$$.
+ 4. (Compound) assignment (see above rule 6.) $$e_1$$ @ $$e_2 \Rightarrow e_2 < e_1$$.
+ 5. Function call postfix-expression(arg expressions) $$\Rightarrow$$
+    - Postfix-expression $$< $$ $$arg expressions$$ and $$default argument expressions$$.
+    - Argument expressions are indeterminately sequenced instead of being unsequenced.
+    - For an operator invoked using the operator notation, the operands are sequenced as
+      for built-in operators.
+ 6. New expression $$\Rightarrow$$ the allocation function is sequenced before the expressions in the initializer.
+ 7. Parenthesized initializer ($$e_1$$,...$$e_n) $$\Rightarrow$$ $$\forall i=1,\cdots,n-1$$ we have $$e_i < e_{i+1}$$.
+   {% comment %}_ this is because vim is confused by the \_{% endcomment %}
 
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
