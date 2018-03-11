@@ -65,5 +65,16 @@ We first need some definitions. Skip them if you are already familiar with them:
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
 [stackoverflow_c++_standard]: https://stackoverflow.com/questions/81656/where-do-i-find-the-current-c-or-c-standard-documents
+[defs]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/defs.png %}
+[example1]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/example1.png %}
+[example2]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/example2.png %}
+[example3]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/example3.png %}
+[example4]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/example4.png %}
+[example5]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/example5.png %}
+[example6]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/example6.png %}
+[example7]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/example7.png %}
+[example8]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/example8.png %}
+[example9]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/example9.png %}
+[example10]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/example10.png %}
 
 {% endcomment %}
