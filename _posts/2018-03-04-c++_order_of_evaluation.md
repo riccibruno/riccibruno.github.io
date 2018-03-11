@@ -113,9 +113,18 @@ The basic rules are:
  - Given a full expression $$E_1$$ and the next full expression $$E_2$$,
    $$E_1 < E_2$$.
  - Given an operator @ and operands $$E_i$$, val $$E_i < $$ val @.
+   (note that nothing is said about the side effects)
  - In a function call, every argument expression and the postfix expression designating
    the call is sequenced before every expression in the function body.
    Additionally, function calls are indeterminately sequenced if not otherwise sequenced.
+
+The specific rules are (where @ is a placeholder for one of the appropriate operators):
+ - Postfix ++/-- : val @ < se @.
+ - Prefix ++/-- with operand $$e$$ : val $$e < $$ se @ $$< $$ val @.
+ - Logical && and || with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$)
+   : $$e_1 < e_2$$.
+ - Ternary ?: with operands $$e_1$$, $$e_2$$ and $$e_3$$ ($$e_1$$ ? $$e_2$$ : $$e_3$$)
+   : $$e_1 < e_2$$ and $$e_1 < e_3$$.
 
 <!-- kramdown links defs -->
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
