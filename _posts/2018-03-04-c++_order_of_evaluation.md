@@ -12,7 +12,7 @@ of example expressions.
 This draft should be very close to the final c++17 standard.
 (See [this question on stackoverflow][stackoverflow_c++_standard])
 We will indicate which rules apply only to c++17 and which rules apply to both
-c++17 and c++14. For the precise wording of the rules and definition please consult the standard.
+c++17 and c++14. For the precise wording of the rules and definitions please consult the standard.
 
 We first need some definitions. Skip them if you are already familiar with them:
 
