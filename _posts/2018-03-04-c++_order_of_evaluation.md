@@ -193,12 +193,12 @@ All of the examples below use built-in arithmetic types (say ints).
    in c++14/17 $$\Rightarrow$$ undefined behavior\\
    - - -
 8. ![example8]\\
-   in c++14 $$\Rightarrow$$ well-defined because of the sequencing properties of the logical \|\|.\\
+   in c++14 $$\Rightarrow$$ well-defined because of the sequencing properties of the logical \|\|.
 
    $$
-     \begin{cases}
-       0 &\text{ if } i = -1 \\
-       1 &\text{ if } i \neq -1
+     i_\text{after} = \begin{cases}
+       0 &\text{ if } i_\text{old} = -1 \\
+       1 &\text{ if } i_\text{old} \neq -1
      \end{cases}
    $$
 
