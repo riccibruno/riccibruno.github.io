@@ -174,14 +174,14 @@ References to the standard for the rules added in c++17:
  6. 8.3.4 [expr.new]/19
  7. 11.6 [dcl.init]/19
 
-We new consider some examples to show how those rules work in action.
+We new consider some examples to show how the above rules work in action.
 The examples are roughly ordered in order of increasing complexity.
 To illustrate them we introduce _sequenced-before graphs_.
 A sequenced-before graph is the directed graph obtained from the sequenced-before partial
 order for some set of value/side effect computations where $$a \rightarrow b$$ means
 that $$a$$ is sequenced-before $$b$$. Sequenced-before graphs allows us to easily detect if one
-of the two conditions for undefinedness are present, and if they are not present to decypher the meaning
-of non-obvious expressions. Wihout further ado here are the graph legends we will use:
+of the two conditions for undefinedness are present, and if they are not present to decipher the meaning
+of non-obvious expressions. Without further ado here are the graph legends we will use:
 
 ![defs]
 
@@ -198,19 +198,19 @@ All of the examples below use built-in arithmetic types (say ints).
    - - -
 3. ![example3]\\
    in c++14 $$\Rightarrow$$ undefined behavior\\
-   in c++17 $$\Rightarrow$$ unspecified behavior: can be either `f(i, i+1)` or `f(i, i)`.
+   in c++17 $$\Rightarrow$$ unspecified behavior; can be either `f(i, i+1)` or `f(i, i)`.
    In any case `i` is guaranteed to have been incremented before the body of the function is entered.\\
    - - -
    - - -
 4. ![example4]\\
    in c++14 $$\Rightarrow$$ undefined behavior because of all of the red arrows\\
-   in c++17 $$\Rightarrow$$ unspecified behavior: can be either `f(i+1, i+2)` or `f(i+2, i+2)`.
+   in c++17 $$\Rightarrow$$ unspecified behavior; can be either `f(i+1, i+2)` or `f(i+2, i+2)`.
    In any case `i` is guaranteed to have been incremented before the body of the function is entered.\\
    - - -
    - - -
 5. ![example5]\\
    in c++14 $$\Rightarrow$$ undefined behavior\\
-   in c++17 $$\Rightarrow$$ well-defined: equivalent to `(cout << i) << i`.
+   in c++17 $$\Rightarrow$$ well-defined; equivalent to `(cout << i) << i`.
    Note that postfix ++ has much higher precedence than \<\<.\\
    - - -
    - - -
