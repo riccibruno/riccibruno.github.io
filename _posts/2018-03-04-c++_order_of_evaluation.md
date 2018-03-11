@@ -3,7 +3,7 @@ layout:        post
 title:         "Order of evaluation of (sub)expressions, the sequenced-before partial order and sequenced-before graphs in c++14/17"
 my_category:   "c++"
 ---
-**in construction**
+**⌛in construction ⌛**
 
 In this post we review the rules concerning the order of evaluation of (sub)expressions in c++14 and c++17.
 The sequenced-before partial order binary relation is introduced and copious references to the standard are given.
