@@ -187,6 +187,12 @@ References to the standard for the rules added in c++17:
 
 ### Examples
 
+*A warning :* gcc and clang are supposed to be able to detect undefined behavior caused by the
+sequencing rules with `-Wsequence-point`. However as of gcc 7.2 and clang 5 so many false positive
+are reported as to make this useless. All examples below trigger a warning even when no undefined bahavior
+is present according to the standard. Of course in practice one should question the wisdom of writing
+code where a detailed read of the standard is needed to determine its validity.
+
 We new consider some examples to show how the above rules work in action.
 The examples are roughly ordered in order of increasing complexity.
 To illustrate them we introduce _sequenced-before graphs_.
