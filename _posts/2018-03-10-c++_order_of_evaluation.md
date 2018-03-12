@@ -138,12 +138,12 @@ References to the standard for the basic rules:
 The specific rules are (where @ is a placeholder for one of the appropriate operators):
  1. Postfix \+\+/\-\- $$\Rightarrow$$ val @ < se @.
  2. Prefix \+\+/\-\- with operand $$e \Rightarrow$$ val $$e < $$ se @ $$< $$ val @.
- 3. Logical && and \|\| with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow e_1 < e_2$$.
- 4. Ternary ?: with operands $$e_1$$, $$e_2$$ and $$e_3$$ ($$e_1$$ ? $$e_2$$ : $$e_3$$) $$\Rightarrow e_1 < e_2$$ and $$e_1 < e_3$$.
- 5. Comma , with operands $$e_1$$ and $$e_2$$ ($$e_1$$, $$e_2$$) $$\Rightarrow e_1 < e_2$$.
+ 3. Logical && and \|\| with operands $$e_1$$ and $$e_2$$ (`$$e_1$$ @ $$e_2$$`) $$\Rightarrow e_1 < e_2$$.
+ 4. Ternary ?: with operands $$e_1$$, $$e_2$$ and $$e_3$$ (`$$e_1$$ ? $$e_2$$ : $$e_3$$`) $$\Rightarrow e_1 < e_2$$ and $$e_1 < e_3$$.
+ 5. Comma , with operands $$e_1$$ and $$e_2$$ (`$$e_1$$, $$e_2$$`) $$\Rightarrow e_1 < e_2$$.
  6. (Compound) assignment @ $$\in \{$$ =,\+=,\-=,\*=,/=,%=,^=,\|=,&=,\<\<=,\>\>= $$\}$$ \\
-   with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow$$ val $$e_1$$ and val $$e_2 < $$ se @ $$< $$ val @.
- 7. Braced-init-list \{ $$e_1$$, $$e_2$$, ..., $$e_n$$  \} $$\Rightarrow$$ $$\forall i=1,\cdots,n-1$$ we have $$e_i < e_{i+1}$$.{% comment %}_ this is because vim is confused by the \_{% endcomment %}
+   with operands $$e_1$$ and $$e_2$$ (`$$e_1$$ @ $$e_2$$`) $$\Rightarrow$$ val $$e_1$$ and val $$e_2 < $$ se @ $$< $$ val @.
+ 7. Braced-init-list `\{ $$e_1$$, $$e_2$$, ..., $$e_n$$  \}` $$\Rightarrow$$ $$\forall i=1,\cdots,n-1$$ we have $$e_i < e_{i+1}$$.{% comment %}_ this is because vim is confused by the \_{% endcomment %}
  8. Return statement $$\Rightarrow$$ copy init of the result $$< $$ destruction of temporaries at the end of the full expression
    $$< $$ destruction of the local variables in the block.
  9. New expression $$\Rightarrow$$ the allocation function is indeterminately sequenced with the expression in the initializer,
@@ -163,18 +163,18 @@ References to the standard for the specific rules:
 ### Sequencing rules : c++17 rules
 
 The rules added in c++17 are:
- 1. Subscript operator [] with operands $$e_1$$ and $$e_2$$ ($$e_1$$[$$e_2$$]) $$\Rightarrow e_1 < e_2$$.
+ 1. Subscript operator [] with operands $$e_1$$ and $$e_2$$ (`$$e_1$$[$$e_2$$]`) $$\Rightarrow e_1 < e_2$$.
  2. Pointer to member operator .\* / pointer to member of pointer operator ->\* with operands $$e_1$$ and $$e_2$$\\
-   ($$e_1$$@$$e_2$$) $$\Rightarrow e_1 < e_2$$.
- 3. Arithmetic shifts \<\</\>\> with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow e_1 < e_2$$.
- 4. (Compound) assignment (see above rule 6.) $$e_1$$ @ $$e_2 \Rightarrow e_2 < e_1$$.
+   (`$$e_1$$@$$e_2$$`) $$\Rightarrow e_1 < e_2$$.
+ 3. Arithmetic shifts \<\</\>\> with operands $$e_1$$ and $$e_2$$ (`$$e_1$$ @ $$e_2$$`) $$\Rightarrow e_1 < e_2$$.
+ 4. (Compound) assignment (see above rule 6.)(`$$e_1$$ @ $$e_2`) \Rightarrow e_2 < e_1$$.
  5. Function call `postfix-expression(arg expressions)` $$\Rightarrow$$
     - Postfix-expression $$< $$ arg expressions and default argument expressions.
     - Argument expressions are indeterminately sequenced instead of being unsequenced.
     - For an operator invoked using the operator notation, the operands are sequenced as
       for built-in operators.
  6. New expression $$\Rightarrow$$ the allocation function is sequenced before the expressions in the initializer.
- 7. Parenthesized initializer ($$e_1$$, ..., $$e_n$$) $$\Rightarrow$$ the $$e_i$$ are indeterminately sequenced.
+ 7. Parenthesized initializer `($$e_1$$, ..., $$e_n$$)` $$\Rightarrow$$ the $$e_i$$ are indeterminately sequenced.
 
 References to the standard for the rules added in c++17:
  1. 8.2.1 [expr.sub]/1
