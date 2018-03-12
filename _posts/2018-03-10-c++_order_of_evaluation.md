@@ -230,7 +230,7 @@ All of the examples below use built-in arithmetic types (say ints).
 5. ![example5]\\
    in c++14 $$\Rightarrow$$ undefined behavior\\
    in c++17 $$\Rightarrow$$ well-defined; equivalent to `(cout << i) << i`.
-   Note that postfix ++ has much higher precedence than \<\<.\\
+   Note that postfix ++ has [much higher precedence][cppreference_operator_precedence] than \<\<.\\
    - - -
    - - -
 6. ![example6]\\
@@ -266,6 +266,7 @@ All of the examples below use built-in arithmetic types (say ints).
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
 [stackoverflow_c++_standard]: https://stackoverflow.com/questions/81656/where-do-i-find-the-current-c-or-c-standard-documents
 [defs]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/defs.png %}
+[cppreference_operator_precedence]: http://en.cppreference.com/w/cpp/language/operator_precedence
 [example1]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/example1.png %}
 [example2]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/example2.png %}
 [example3]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/example3.png %}
