@@ -9,6 +9,8 @@ Sequenced-before graphs are then introduced and used to determine the well-defin
 of example expressions.
 <!--more-->
 
+##### Definitions
+
 The << standard >> means the draft [n4659][draft_n4659] unless mentioned otherwise.
 This draft should be very close to the final c++17 standard.
 (See [this question on stackoverflow][stackoverflow_c++_standard])
@@ -96,6 +98,8 @@ We first need some definitions. Skip them if you are already familiar with them:
      pointer-to-member types and std::nullptr_t (6.9 [basic.types]/9))
    - maximal sequence of adjacent bitfields all having non-zero width
 
+##### Well-definedness criterion
+
 We can now give the criterion for the well-definedness of an expression.
 The behavior is well-defined unless one of the following is true, in
 which case the behavior is undefined (4.6 [intro.execution]/17):
@@ -105,12 +109,16 @@ which case the behavior is undefined (4.6 [intro.execution]/17):
    on the same memory location, where the value computation uses the value in the
    memory location
 
+##### Sequencing rules
+
 Unless otherwise specified evaluations are unsequenced (4.6 [intro.execution]/17).
 The sequencing rules can be classified into 3 categories
 (in the standard the rules are given all over the place; search for << sequenced before >>):
  - basic rules
  - specific rules
  - rules added in c++17
+
+##### Sequencing rules : basic rules
 
 The basic rules are:
  1. Given a full expression $$e_1$$ and the next full expression $$e_2 \Rightarrow e_1 < e_2$$.
@@ -124,6 +132,8 @@ References to the standard for the basic rules:
  1. 4.6 [intro.execution]/16
  2. 4.6 [intro.execution]/17
  3. 4.6 [intro.execution]/18 and 8.2.2 [expr.call]/5
+
+##### Sequencing rules : specific rules
 
 The specific rules are (where @ is a placeholder for one of the appropriate operators):
  1. Postfix \+\+/\-\- $$\Rightarrow$$ val @ < se @.
@@ -150,13 +160,15 @@ References to the standard for the specific rules:
  8. 9.6.3 [stmt.return]/3
  9. 8.3.4 [expr.new]/19
 
+##### Sequencing rules : c++17 rules
+
 The rules added in c++17 are:
  1. Subscript operator [] with operands $$e_1$$ and $$e_2$$ ($$e_1$$[$$e_2$$]) $$\Rightarrow e_1 < e_2$$.
  2. Pointer to member operator .\* / pointer to member of pointer operator ->\* with operands $$e_1$$ and $$e_2$$\\
    ($$e_1$$@$$e_2$$) $$\Rightarrow e_1 < e_2$$.
  3. Arithmetic shifts \<\</\>\> with operands $$e_1$$ and $$e_2$$ ($$e_1$$ @ $$e_2$$) $$\Rightarrow e_1 < e_2$$.
  4. (Compound) assignment (see above rule 6.) $$e_1$$ @ $$e_2 \Rightarrow e_2 < e_1$$.
- 5. Function call postfix-expression(arg expressions) $$\Rightarrow$$
+ 5. Function call `postfix-expression(arg expressions)` $$\Rightarrow$$
     - Postfix-expression $$< $$ arg expressions and default argument expressions.
     - Argument expressions are indeterminately sequenced instead of being unsequenced.
     - For an operator invoked using the operator notation, the operands are sequenced as
@@ -172,6 +184,8 @@ References to the standard for the rules added in c++17:
  5. 8.2.2 [expr.call]/5
  6. 8.3.4 [expr.new]/19
  7. 11.6 [dcl.init]/19
+
+##### Examples
 
 We new consider some examples to show how the above rules work in action.
 The examples are roughly ordered in order of increasing complexity.
