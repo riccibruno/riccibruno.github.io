@@ -75,6 +75,28 @@ auto lambda = []() -> X& { X x{}; std::cout << "Do stuff inside the lambda with 
 X& rx = lambda();
 std::cout << "Do stuff after calling lambda with rx, oops rx is dangling... " << &rx << '\n'; {% endraw %}
 ~~~
+will print:
+~~~ {% raw %}
+X::X() : 0x7ffd8fa69d88
+Do stuff inside the lambda with x... 0x7ffd8fa69d88
+X::~X() : 0x7ffd8fa69d88
+Do stuff after calling lambda with rx, oops rx is dangling... 0x7ffd8fa69d88 {% endraw %}
+~~~
+
+#### Example: exception << *new expression* >>
+~~~ c++ {% raw %}
+Y* py = nullptr; {% endraw %}{% comment %}*{% endcomment %}{% raw %}
+(py = new Y{42, X{}}, std::cout << "Do stuff with py->rx..." << &(py->rx) << '\n');
+std::cout << "Do more stuff with py->rx, oops dangling reference... " << &(py->rx) << '\n';
+delete py; {% endraw %}
+~~~
+will print:
+~~~ {% raw %}
+X::X() : 0x7ffd8fa6a300
+Do stuff with py->rx...0x7ffd8fa6a300
+X::~X() : 0x7ffd8fa6a300
+Do more stuff with py->rx, oops dangling reference... 0x7ffd8fa6a300 {% endraw %}
+~~~
 
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
 [stackoverflow_c++_standard]: https://stackoverflow.com/questions/81656/where-do-i-find-the-current-c-or-c-standard-documents
