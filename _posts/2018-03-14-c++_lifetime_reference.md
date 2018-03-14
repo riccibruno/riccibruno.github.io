@@ -63,3 +63,6 @@ Do stuff with rx... 0x7ffd8fa6a338
 X::~X() : 0x7ffd8fa6a338
 {% endraw %}
 ~~~
+
+[draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
+[stackoverflow_c++_standard]: https://stackoverflow.com/questions/81656/where-do-i-find-the-current-c-or-c-standard-documents
