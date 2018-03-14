@@ -29,8 +29,7 @@ is extended to the lifetime of the reference, with three exceptions:
 
 Given:
 
-~~~ c++
-{% raw %}
+~~~ c++ {% raw %}
 #include <iostream>
 #define PRETTY(x) (std::cout << __PRETTY_FUNCTION__ << " : " << (x) << std::endl)
 
@@ -42,22 +41,19 @@ struct X{
 struct Y {
     int i;
     const X& rx;
-};
-{% endraw %}
+}; {% endraw %}
 ~~~
 
 In general the lifetime of temporaries is extended:
 
-~~~ c++
-{% raw %}
+~~~ c++ {% raw %}
 const X& rx = X{};
-std::cout << "Do stuff with rx... " << &rx << '\n';
-{% endraw %}
+std::cout << "Do stuff with rx... " << &rx << '\n'; {% endraw %}
 ~~~
 
 will print:
-~~~
-{% raw %}
+
+~~~ {% raw %}
 X::X() : 0x7ffd8fa6a338
 Do stuff with rx... 0x7ffd8fa6a338
 X::~X() : 0x7ffd8fa6a338
