@@ -17,16 +17,15 @@ The rules are given in 15.2 [class.temporary]/6.
 
 In general when a temporary is bound to a reference its lifetime
 is extended to the lifetime of the reference, with three exceptions:
- 1. When a temporary is bound to a reference parameter of a function call,
+ 1. *ref. param* --- When a temporary is bound to a reference parameter of a function call,
    the lifetime of the temporary is extended until the end of the full expression.
- 2. The lifetime of a temporary bound to the return value of a function is *not*
+ 2. *return value* --- The lifetime of a temporary bound to the return value of a function is *not*
    extended.
- 3. When a temporary is bound to a reference in a new expression,
+ 3. *new expression* --- When a temporary is bound to a reference in a new expression,
    the lifetime of the temporary is extended until the end of the full expression
    (and not until the delete).
 
 ### Example
-
 Given:
 
 ~~~ c++ {% raw %}
@@ -44,6 +43,7 @@ struct Y {
 }; {% endraw %}
 ~~~
 
+#### Example: general case
 In general the lifetime of temporaries is extended:
 
 ~~~ c++ {% raw %}
@@ -56,8 +56,22 @@ will print:
 ~~~ {% raw %}
 X::X() : 0x7ffd8fa6a338
 Do stuff with rx... 0x7ffd8fa6a338
-X::~X() : 0x7ffd8fa6a338
-{% endraw %}
+X::~X() : 0x7ffd8fa6a338 {% endraw %}
+~~~
+#### Example: exception << *ref. param* >>
+
+~~~ c++ {% raw %}
+auto lambda = [](const X& rx) -> void { std::cout << "Do stuff with rx... " << &rx << '\n'; };
+(lambda(X{}), std::cout << "Do stuff after calling lambda" << '\n'); {% endraw %}
+~~~
+
+will print:
+
+~~~ {% raw %}
+X::X() : 0x7ffd8fa6a320
+Do stuff with rx... 0x7ffd8fa6a320
+Do stuff after calling lambda
+X::~X() : 0x7ffd8fa6a320 {% endraw %}
 ~~~
 
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
