@@ -45,33 +45,35 @@ struct Y {
 
 #### Example: general case
 In general the lifetime of temporaries is extended:
-
 ~~~ c++ {% raw %}
 const X& rx = X{};
 std::cout << "Do stuff with rx... " << &rx << '\n'; {% endraw %}
 ~~~
-
 will print:
-
 ~~~ {% raw %}
 X::X() : 0x7ffd8fa6a338
 Do stuff with rx... 0x7ffd8fa6a338
 X::~X() : 0x7ffd8fa6a338 {% endraw %}
 ~~~
-#### Example: exception << *ref. param* >>
 
+#### Example: exception << *ref. param* >>
 ~~~ c++ {% raw %}
 auto lambda = [](const X& rx) -> void { std::cout << "Do stuff with rx... " << &rx << '\n'; };
 (lambda(X{}), std::cout << "Do stuff after calling lambda" << '\n'); {% endraw %}
 ~~~
-
 will print:
-
 ~~~ {% raw %}
 X::X() : 0x7ffd8fa6a320
 Do stuff with rx... 0x7ffd8fa6a320
 Do stuff after calling lambda
 X::~X() : 0x7ffd8fa6a320 {% endraw %}
+~~~
+
+#### Example: exception << *return value* >>
+~~~ c++ {% raw %}
+auto lambda = []() -> X& { X x{}; std::cout << "Do stuff inside the lambda with x... " << &x << '\n'; return x;};
+X& rx = lambda();
+std::cout << "Do stuff after calling lambda with rx, oops rx is dangling... " << &rx << '\n'; {% endraw %}
 ~~~
 
 [draft_n4659]: {{ site.baseurl }}{% link /assets/c++_order_of_evaluation/n4659_final_c++17.pdf %}
