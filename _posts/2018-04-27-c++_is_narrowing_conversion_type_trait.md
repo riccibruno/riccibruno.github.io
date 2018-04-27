@@ -106,3 +106,7 @@ Some notes on the above code:
      similar `std::is_arithmetic_v`. This could easily be replaced by `std::is_arithmetic<T>::value`.
    * We use the c++14-style `std::enable_if_t` which is just an alias template for
      `typename std::enable_if<B, T>::type`.
+
+This first implementation works quite well. However a few [tests][test_is_narrowing_conversion.cpp] fails
+
+[test_is_narrowing_conversion.cpp]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/test_is_narrowing_conversion.cpp
