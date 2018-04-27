@@ -53,4 +53,16 @@ Although it would be quite possible to write the `is_narrowing_conversion` type 
 just by special-casing the various possibilities obtained from the above observation,
 it would be quite annoying to write and redundant since the compiler must be able to
 detect such conversions anyways. The idea is therefore to find an expression usable in an
-SFINAE context.
+SFINAE context to detect a narrowing conversion and enable/disable a class template specialization.
+
+The basic idea is to have the following function template/function declarations:
+~~~c++
+template<typename To>
+constexpr std::true_type is_narrowing_convertion_aux(To);
+constexpr std::false_type is_narrowing_convertion_aux(...);
+~~~
+and then to examine the result of
+~~~c++
+is_narrowing_convertion_aux<To>( {std::declval<From>()} )::value
+~~~
+which will be true or false depending on which overload has been selected.
