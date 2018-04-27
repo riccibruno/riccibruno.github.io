@@ -4,20 +4,21 @@ title:          "An is_narrowing_conversion type trait for Clang, GCC and MSVC"
 my_category:    "c++"
 ---
 This post present a type trait to detect narrowing conversions as defined in the c++ standard.
-The basic idea is explained and then workarounds for bugs in gcc/clang/msvc are presented.
+The basic idea is explained and then workarounds for bugs in GCC, Clang and MSVC are presented.
 <!--more-->
 
-### Introduction and definition
+### Introduction and definition of narrowing conversions
 
 Since c++11 the concept of a *narrowing conversion* is defined by the c++ standard.
 The idea is to prevent loss of information when doing a conversion between arithmetic types.
 It might therefore be useful to know when a conversion is a narrowing conversion.
-The `<type_traits>` header provides a multitude of type traits but currently contains no type trait
-detecting such conversion, although a proposal exists (P0870R0).
+The `<type_traits>` header provides a multitude of type traits but as of c++17 contains no type trait
+detecting such conversion (although a proposal exists: P0870R0).
 
-The goal of this post is to present an implementation of such a type trait.
-First here is the definition of a narrowing conversion (in the c++17 draft n4659)
-(in [dcl.init.list]/11.6.4 List-initialization):
+The goal of this post is to present an implementation of the type trait
+`is_narrowing_conversion<From, To>` where `From` and `To` are two arbitrary types.
+First we need the definition of a narrowing conversion (in the c++17 draft n4659,
+in [dcl.init.list]/11.6.4 List-initialization):
 
 > A *narrowing conversion* is an implicit conversion
 >    * from a floating-point type to an integer type, or
@@ -37,39 +38,40 @@ First here is the definition of a narrowing conversion (in the c++17 draft n4659
 >      after integral promotions will fit into the target type.
 
 Since we are interested only in type-level information
-(ie: is a conversion from type T1 to type T2 narrowing?)
-we can discard all the text after "except ..."
+(ie: is a conversion from type `From` to type `To` narrowing?),
+we can discard all the text after "except ...".
 What is left is the following:
 
-An implicit conversion from type T1 to type T2 is narrowing if:
-   * T1 is a floating-point type and T2 an integer type, or
-   * T1 is an integer type or unscoped enumeration type
-     and T2 a floating-point type, or
-   * T1 is a floating-point type and T2 a narrower floating-point type, or
-   * T1 is an integer type or unscoped enumeration type
-     and T2 a narrower integer type
+An implicit conversion from type `From` to type `To` is narrowing if:
+   * `From` is a floating-point type and `To` an integer type, or
+   * `From` is an integer type or unscoped enumeration type
+     and `To` a floating-point type, or
+   * `From` is a floating-point type and `To` a narrower floating-point type, or
+   * `From` is an integer type or unscoped enumeration type
+     and `To` a narrower integer type
 
-Although it would be quite possible to write the `is_narrowing_conversion` type trait
+Although it would be possible to write the `is_narrowing_conversion<From, To>` type trait
 just by special-casing the various possibilities obtained from the above observation,
 it would be quite annoying to write and redundant since the compiler must be able to
-detect such conversions anyways. The idea is therefore to find an expression usable in an
+detect such conversions anyway. The idea is therefore to find an expression usable in an
 SFINAE context to detect a narrowing conversion and enable/disable a class template specialization.
 
 ### First implementation
 
-The basic idea is to have the following function template/function declarations:
+The basic idea is to have the following function template/function declarations
+(no definitions are needed since it will only be used inside decltype):
 ~~~c++
 template<typename To>
 constexpr std::true_type is_narrowing_convertion_aux(To);
 constexpr std::false_type is_narrowing_convertion_aux(...);
 ~~~
-and then to examine the result of
+and then to examine the result of:
 ~~~c++
 decltype(is_narrowing_convertion_aux<To>( {std::declval<From>()} ) )::value
 ~~~
 which will be true or false depending on which overload has been selected.
 This idea is based in the fact that copy-list-initializations do not allow
-narrowing conversions. We obtain the following [code][impl_v1]:
+narrowing conversions. Consequently we obtain the following [code][impl_v1]:
 ~~~c++
 #include <type_traits>
 #include <utility>
@@ -100,18 +102,18 @@ inline constexpr bool is_narrowing_conversion_v =
 Some notes on the above code:
    * We use the `typename identity<T>::type` idiom to disable function template argument
      deduction. This is not strictly needed but we will need the identity template to work
-     around a bug in MSVC later anyways. This force us to specify the `To` template argument
+     around a bug in MSVC later anyway. This forces us to specify the `To` template argument
      inside `decltype(...)`.
    * We provide the c++17-style variable template `is_narrowing_conversion_v` and use the
      similar `std::is_arithmetic_v`. This could easily be replaced by `std::is_arithmetic<T>::value`.
-   * We use the c++14-style `std::enable_if_t` which is just an alias template for
+   * We use the c++14-style `std::enable_if_t<B, T>` which is just an alias template for
      `typename std::enable_if<B, T>::type`.
 
-### Second implementation : making clang happy
+### Second implementation : making Clang happy
 
 This first implementation works quite well. However a few [tests][test_is_narrowing_conversion.cpp] fails.
 First, we are not considering the case when `From` is an enumeration type. However changing
-`std::is_arithmetic_v<From>` to `(std::is_arithmetic_v<From> || std::is_enum_v<From>)` still leaves clang (5.0) unhappy.
+`std::is_arithmetic_v<From>` to `(std::is_arithmetic_v<From> || std::is_enum_v<From>)` still leaves Clang (Clang 5.0) unhappy.
 Therefore we add a special case for when `From` is an enumeration type.
 This gives us the [second version][impl_v2]:
 
@@ -157,8 +159,8 @@ inline constexpr bool is_narrowing_conversion_v =
 ### Third implementation : making GCC happy
 
 Clang 5.0 compiles correctly all the tests with the
-second implementation but GCC for some reason fails to
-detect some narrowing conversions to bool:
+second implementation but GCC (GCC 7.2) for some reason fails to
+detect some narrowing conversions to `bool`:
 
 ~~~
 test_is_narrowing_conversion.cpp: In function ‘int main()’:
@@ -171,7 +173,7 @@ test_is_narrowing_conversion.cpp:18:5: error: static assertion failed
 ~~~
 
 To fix this problem we add two special cases:
-   * Anything but `bool` to `bool` => narrowing
+   * (Anything but `bool`) to `bool` => narrowing
    * `bool` to `bool` => non-narrowing
 and obtain the following [third implementation][impl_v3]:
 
