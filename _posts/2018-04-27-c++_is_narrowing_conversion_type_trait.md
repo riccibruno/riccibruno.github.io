@@ -13,7 +13,7 @@ Since c++11 the concept of a *narrowing conversion* is defined by the c++ standa
 The idea is to prevent loss of information when doing a conversion between arithmetic types.
 It might therefore be useful to know when a conversion is a narrowing conversion.
 The `<type_traits>` header provides a multitude of type traits but as of c++17 contains no type trait
-detecting such conversion (although a proposal exists: P0870R0).
+detecting such conversion (although a proposal exists: [P0870R0][P0870R0]).
 
 The goal of this post is to present an implementation of the type trait
 `is_narrowing_conversion<From, To>` where `From` and `To` are two arbitrary types.
@@ -242,6 +242,7 @@ this with `identity<decltype(...)>::type::value`. The last error is from the `in
 which MSVC do not support yet. Remove it allows MSVC to compile all the tests successfully.
 Here is the [fourth and final implementation][impl_v4] which [you can see on Godbolt][godbolt_impl_v4].
 
+[P0870R0]: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0870r0.html
 [impl_v1]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/is_narrowing_conversion_v1.hpp
 [test_is_narrowing_conversion.cpp]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/test_is_narrowing_conversion.cpp
 [impl_v2]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/is_narrowing_conversion_v2.hpp
