@@ -154,6 +154,82 @@ inline constexpr bool is_narrowing_conversion_v =
     is_narrowing_conversion<From, To>::value;
 ~~~
 
+### Third implementation : making GCC happy
+
+Clang 5.0 compiles correctly all the tests with the
+second implementation but GCC for some reason fails to
+detect some narrowing conversions to bool:
+
+~~~
+test_is_narrowing_conversion.cpp: In function ‘int main()’:
+test_is_narrowing_conversion.cpp:17:5: error: static assertion failed
+     static_assert(is_narrowing_conversion_v<float, bool>);
+     ^~~~~~~~~~~~~
+test_is_narrowing_conversion.cpp:18:5: error: static assertion failed
+     static_assert(is_narrowing_conversion_v<double, bool>);
+     ^~~~~~~~~~~~~
+~~~
+
+To fix this problem we add two special cases:
+   * Anything but `bool` to `bool` => narrowing
+   * `bool` to `bool` => non-narrowing
+and obtain the following [third implementation][impl_v3]:
+
+~~~c++
+#include <type_traits>
+#include <utility>
+
+template<typename T>
+struct identity { using type = T; };
+
+template<typename To>
+constexpr std::true_type is_narrowing_convertion_aux(typename identity<To>::type);
+constexpr std::false_type is_narrowing_convertion_aux(...);
+
+template<typename From, typename To, typename = void, typename = void>
+struct is_narrowing_conversion : std::true_type {};
+template<typename From, typename To>
+struct is_narrowing_conversion<From, To,
+    std::enable_if_t<   (std::is_integral_v<From> || std::is_floating_point_v<From>) &&
+                        (std::is_integral_v<To>   || std::is_floating_point_v<To>) &&
+                        (!std::is_same_v<std::remove_cv_t<std::remove_reference_t<To>>, bool>) >,
+    std::enable_if_t<   decltype(
+                            is_narrowing_convertion_aux<To>( {std::declval<From>()} )
+                        )::value >
+> : std::false_type {};
+/* clang (tested on clang 5.0 and below) misdetect the
+ * narrowing conversion when From is an unscoped enumeration type
+ * in some cases. We decay it to the underlying type to
+ * avoid this problem. */
+template<typename From, typename To>
+struct is_narrowing_conversion<From, To,
+    std::enable_if_t<   (std::is_enum_v<From>) &&
+                        (std::is_integral_v<To>   || std::is_floating_point_v<To>) &&
+                        (!std::is_same_v<std::remove_cv_t<std::remove_reference_t<To>>, bool>) >,
+    std::enable_if_t<   decltype(
+                            is_narrowing_convertion_aux<To>( {std::declval<std::underlying_type_t<From> >()} )
+                        )::value >
+> : std::false_type {};
+/* gcc (as of gcc 7.3 and below) do not detect the narrowing
+ * conversion when To is bool in some cases. In this case we return true_type
+ * when From is not bool and false_type when From is bool. Note that gcc
+ * do not like when the above two partial template specializations are enabled,
+ * even though the two specializations below are more specialized (clang is fine).
+ * They are therefore disabled with a check for To == bool up to cv-qual and ref. */
+template<typename From>
+struct is_narrowing_conversion<From, bool,
+    std::enable_if_t<   (std::is_integral_v<From> || std::is_floating_point_v<From> ||
+                        std::is_enum_v<From>) >,
+    void > : std::true_type {};
+template<>
+struct is_narrowing_conversion<bool, bool, void, void> : std::false_type {};
+
+template<typename From, typename To>
+inline constexpr bool is_narrowing_conversion_v =
+    is_narrowing_conversion<From, To>::value;
+~~~
+
 [impl_v1]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/is_narrowing_conversion_v1.hpp
 [test_is_narrowing_conversion.cpp]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/test_is_narrowing_conversion.cpp
 [impl_v2]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/is_narrowing_conversion_v2.hpp
+[impl_v3]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/is_narrowing_conversion_v3.hpp
