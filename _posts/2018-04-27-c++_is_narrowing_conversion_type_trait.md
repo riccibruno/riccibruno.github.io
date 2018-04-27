@@ -175,6 +175,7 @@ test_is_narrowing_conversion.cpp:18:5: error: static assertion failed
 To fix this problem we add two special cases:
    * (Anything but `bool`) to `bool` => narrowing
    * `bool` to `bool` => non-narrowing
+
 and obtain the following [third implementation][impl_v3]:
 
 ~~~c++
