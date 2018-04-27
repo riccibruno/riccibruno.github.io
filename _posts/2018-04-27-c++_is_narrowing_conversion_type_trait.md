@@ -69,7 +69,7 @@ decltype(is_narrowing_convertion_aux<To>( {std::declval<From>()} ) )::value
 ~~~
 which will be true or false depending on which overload has been selected.
 This idea is based in the fact that copy-list-initializations do not allow
-narrowing conversions. We obtain the following code:
+narrowing conversions. We obtain the following [code][impl_v1]:
 ~~~c++
 #include <type_traits>
 #include <utility>
@@ -107,6 +107,7 @@ Some notes on the above code:
    * We use the c++14-style `std::enable_if_t` which is just an alias template for
      `typename std::enable_if<B, T>::type`.
 
-This first implementation works quite well. However a few [tests][test_is_narrowing_conversion.cpp] fails
+This first implementation works quite well. However a few [tests][test_is_narrowing_conversion.cpp] fails.
 
+[impl_v1]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/is_narrowing_conversion_v1.hpp
 [test_is_narrowing_conversion.cpp]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/test_is_narrowing_conversion.cpp
