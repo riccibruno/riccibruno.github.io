@@ -1,6 +1,6 @@
 ---
 layout:         post
-title:          "An is_narrowing_conversion type trait that works on clang, gcc and msvc"
+title:          "An is_narrowing_conversion type trait for Clang, GCC and MSVC"
 my_category:    "c++"
 ---
 This post present a type trait to detect narrowing conversions as defined in the c++ standard.
@@ -55,6 +55,8 @@ it would be quite annoying to write and redundant since the compiler must be abl
 detect such conversions anyways. The idea is therefore to find an expression usable in an
 SFINAE context to detect a narrowing conversion and enable/disable a class template specialization.
 
+### First implementation
+
 The basic idea is to have the following function template/function declarations:
 ~~~c++
 template<typename To>
@@ -66,8 +68,8 @@ and then to examine the result of
 decltype(is_narrowing_convertion_aux<To>( {std::declval<From>()} ) )::value
 ~~~
 which will be true or false depending on which overload has been selected.
-This gives us the following code:
-
+This idea is based in the fact that copy-list-initializations do not allow
+narrowing conversions. We obtain the following code:
 ~~~c++
 #include <type_traits>
 #include <utility>
@@ -94,3 +96,13 @@ template<typename From, typename To>
 inline constexpr bool is_narrowing_conversion_v =
     is_narrowing_conversion<From, To>::value;
 ~~~
+
+Some notes on the above code:
+   * We use the `typename identity<T>::type` idiom to disable function template argument
+     deduction. This is not strictly needed but we will need the identity template to work
+     around a bug in MSVC later anyways. This force us to specify the `To` template argument
+     inside `decltype(...)`.
+   * We provide the c++17-style variable template `is_narrowing_conversion_v` and use the
+     similar `std::is_arithmetic_v`. This could easily be replaced by `std::is_arithmetic<T>::value`.
+   * We use the c++14-style `std::enable_if_t` which is just an alias template for
+     `typename std::enable_if<B, T>::type`.
