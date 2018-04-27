@@ -229,7 +229,20 @@ inline constexpr bool is_narrowing_conversion_v =
     is_narrowing_conversion<From, To>::value;
 ~~~
 
+### Fourth implementation : Making MSVC happy
+
+With the third implementation shown above both GCC and Clang compile correctly all the tests.
+Can MSVC compile it ? Unfortunately for lacks of a Windows machine I can not test it but
+we can use the [Godbolt compiler explorer][godbolt] to test it.
+Specifically we will use `x86-64 MSVC 19 2017 RTW` with `/std:c++latest /O2 /permissive-`.
+The use of `decltype(...)::value` causes an error but using the identity idiom we can replace
+this with `identity<decltype(...)>::type::value`. The last error is from the `inline` variable
+which MSVC do not support yet. Remove it allows MSVC to compile all the tests successfully.
+[Fourth and final implementation][impl_v4].
+
 [impl_v1]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/is_narrowing_conversion_v1.hpp
 [test_is_narrowing_conversion.cpp]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/test_is_narrowing_conversion.cpp
 [impl_v2]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/is_narrowing_conversion_v2.hpp
 [impl_v3]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/is_narrowing_conversion_v3.hpp
+[impl_v4]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/is_narrowing_conversion_v4.hpp
+[godbolt]: https://godbolt.org/
