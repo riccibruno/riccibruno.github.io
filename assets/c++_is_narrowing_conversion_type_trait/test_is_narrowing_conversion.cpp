@@ -1,5 +1,6 @@
 #include <cstdint>
-#include "is_narrowing_conversion_v1.hpp"
+//#include "is_narrowing_conversion_v1.hpp"
+#include "is_narrowing_conversion_v2.hpp"
 
 enum uint8_t_enum : std::uint8_t {};
 enum uint16_t_enum : std::uint16_t {};
