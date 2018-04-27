@@ -63,6 +63,6 @@ constexpr std::false_type is_narrowing_convertion_aux(...);
 ~~~
 and then to examine the result of
 ~~~c++
-is_narrowing_convertion_aux<To>( {std::declval<From>()} )::value
+decltype(is_narrowing_convertion_aux<To>( {std::declval<From>()} ) )::value
 ~~~
 which will be true or false depending on which overload has been selected.
