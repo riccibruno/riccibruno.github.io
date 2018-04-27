@@ -107,7 +107,53 @@ Some notes on the above code:
    * We use the c++14-style `std::enable_if_t` which is just an alias template for
      `typename std::enable_if<B, T>::type`.
 
+### Second implementation : making clang happy
+
 This first implementation works quite well. However a few [tests][test_is_narrowing_conversion.cpp] fails.
+First, we are not considering the case when `From` is an enumeration type. However changing
+`std::is_arithmetic_v<From>` to `(std::is_arithmetic_v<From> || std::is_enum_v<From>)` still leaves clang (5.0) unhappy.
+Therefore we add a special case for when `From` is an enumeration type.
+This gives us the [second version][impl_v2]:
+
+~~~c++
+#include <type_traits>
+#include <utility>
+
+template<typename T>
+struct identity { using type = T; };
+
+template<typename To>
+constexpr std::true_type is_narrowing_convertion_aux(typename identity<To>::type);
+constexpr std::false_type is_narrowing_convertion_aux(...);
+
+template<typename From, typename To, typename = void, typename = void>
+struct is_narrowing_conversion : std::true_type {};
+template<typename From, typename To>
+struct is_narrowing_conversion<From, To,
+    std::enable_if_t<   (std::is_integral_v<From> || std::is_floating_point_v<From>) &&
+                        (std::is_integral_v<To>   || std::is_floating_point_v<To>) >,
+    std::enable_if_t<   decltype(
+                            is_narrowing_convertion_aux<To>( {std::declval<From>()} )
+                        )::value >
+> : std::false_type {};
+/* clang (tested on clang 5.0 and below) misdetect the
+ * narrowing conversion when From is an unscoped enumeration type
+ * in some cases. We decay it to the underlying type to
+ * avoid this problem. */
+template<typename From, typename To>
+struct is_narrowing_conversion<From, To,
+    std::enable_if_t<   (std::is_enum_v<From>) &&
+                        (std::is_integral_v<To>   || std::is_floating_point_v<To>) >,
+    std::enable_if_t<   decltype(
+                            is_narrowing_convertion_aux<To>( {std::declval<std::underlying_type_t<From> >()} )
+                        )::value >
+> : std::false_type {};
+
+template<typename From, typename To>
+inline constexpr bool is_narrowing_conversion_v =
+    is_narrowing_conversion<From, To>::value;
+~~~
 
 [impl_v1]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/is_narrowing_conversion_v1.hpp
 [test_is_narrowing_conversion.cpp]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/test_is_narrowing_conversion.cpp
+[impl_v2]: https://github.com/riccibruno/riccibruno.github.io/blob/master/assets/c%2B%2B_is_narrowing_conversion_type_trait/is_narrowing_conversion_v2.hpp
